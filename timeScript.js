@@ -148,42 +148,61 @@ function showTime(appMainState) {
         ${timeValue.seconds % 2 === 0 ? ":" : "&nbsp;"}  ${timeSeconds}</p>
     `;
   timeDisplayArea.innerHTML = tiemrText;
-  //ранок
-  if (timeValue.hours < 12 && timeValue.hours >= 4) {
-    console.log(timeValue.hours < 12 && timeValue.hours >= 4);
-    timeDisplayArea.classList.add("time-clock-m");
-    if (timeDisplayArea.classList.contains("time-clock-n"))
-      timeDisplayArea.classList.remove("time-clock-n");
-    if (timeDisplayArea.classList.contains("time-clock-d"))
-      timeDisplayArea.classList.remove("time-clock-d");
-    if (timeDisplayArea.classList.contains("time-clock-e"))
-      timeDisplayArea.classList.remove("time-clock-e");
-  } //день
-  else if (timeValue.hours < 16 && timeValue.hours >= 12) {
-    timeDisplayArea.classList.add("time-clock-d");
-    if (timeDisplayArea.classList.contains("time-clock-n"))
-      timeDisplayArea.classList.remove("time-clock-n");
-    if (timeDisplayArea.classList.contains("time-clock-m"))
-      timeDisplayArea.classList.remove("time-clock-m");
-    if (timeDisplayArea.classList.contains("time-clock-e"))
-      timeDisplayArea.classList.remove("time-clock-e");
-  } //вечір
-  else if (timeValue.hours < 23 && timeValue.hours >= 16) {
-    timeDisplayArea.classList.add("time-clock-e");
-    if (timeDisplayArea.classList.contains("time-clock-n"))
-      timeDisplayArea.classList.remove("time-clock-n");
-    if (timeDisplayArea.classList.contains("time-clock-m"))
-      timeDisplayArea.classList.remove("time-clock-m");
-    if (timeDisplayArea.classList.contains("time-clock-d"))
-      timeDisplayArea.classList.remove("time-clock-d");
-  } //ніч
-  else if (timeValue.hours < 3 && timeValue.hours >= 23) {
-    timeDisplayArea.classList.add("time-clock-n");
-    if (timeDisplayArea.classList.contains("time-clock-d"))
-      timeDisplayArea.classList.remove("time-clock-d");
-    if (timeDisplayArea.classList.contains("time-clock-m"))
-      timeDisplayArea.classList.remove("time-clock-m");
-    if (timeDisplayArea.classList.contains("time-clock-e"))
-      timeDisplayArea.classList.remove("time-clock-e");
+   if (timeValue.hours < 12 && timeValue.hours >= 4) {
+    addStyle(
+      appMainState,
+      "timeClock",
+      "time-clock-m",
+      "time-clock-d",
+      "time-clock-e",
+      "time-clock-n"
+    );
+  } else if (timeValue.hours < 16 && timeValue.hours >= 12) {
+    addStyle(
+      appMainState,
+      "timeClock",
+      "time-clock-d",
+      "time-clock-n",
+      "time-clock-m",
+      "time-clock-e"
+    );
+  } else if (timeValue.hours < 23 && timeValue.hours >= 16) {
+    addStyle(
+      appMainState,
+      "timeClock",
+      "time-clock-e",
+      "time-clock-d",
+      "time-clock-m",
+      "time-clock-n"
+    );
+  } else if (timeValue.hours < 3 && timeValue.hours >= 23) {
+    addStyle(
+      appMainState,
+      "timeClock",
+      "time-clock-n",
+      "time-clock-d",
+      "time-clock-e",
+      "time-clock-m"
+    );
   }
 }
+function addStyle(
+  appMainState,
+  changeSeltctor,
+  newStyle,
+  oldStyle1,
+  oldStyle2,
+  oldStyle3
+) {
+  //const timeDisplayArea = appMainState.selectors.timeClock;
+  const timeDisplayArea = appMainState.selectors[`${changeSeltctor}`];
+  console.log(timeDisplayArea);
+  timeDisplayArea.classList.add(newStyle);
+  if (timeDisplayArea.classList.contains(oldStyle1))
+    timeDisplayArea.classList.remove(oldStyle1);
+  if (timeDisplayArea.classList.contains(oldStyle2))
+    timeDisplayArea.classList.remove(oldStyle2);
+  if (timeDisplayArea.classList.contains(oldStyle3))
+    timeDisplayArea.classList.remove(oldStyle3);
+}
+
